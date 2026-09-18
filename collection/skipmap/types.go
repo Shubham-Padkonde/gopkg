@@ -23,9 +23,9 @@ import (
 
 // Float32Map represents a map based on skip list in ascending order.
 type Float32Map struct {
-	header       *float32Node
 	length       int64
 	highestLevel int64 // highest level for now
+	header       *float32Node
 }
 
 type float32Node struct {
@@ -81,7 +81,7 @@ func (n *float32Node) equal(key float32) bool {
 	return n.key == key
 }
 
-// NewFloat32 return an empty float32 skipmap.
+// NewFloat32 returns an emptyfloat32 skipmap.
 func NewFloat32() *Float32Map {
 	h := newFloat32Node(0, "", maxLevel)
 	h.flags.SetTrue(fullyLinked)
@@ -528,16 +528,16 @@ func (s *Float32Map) Range(f func(key float32, value interface{}) bool) {
 	}
 }
 
-// Len return the length of this skipmap.
+// Len returns the length of this skipmap.
 func (s *Float32Map) Len() int {
 	return int(atomic.LoadInt64(&s.length))
 }
 
 // Float32MapDesc represents a map based on skip list in descending order.
 type Float32MapDesc struct {
-	header       *float32NodeDesc
 	length       int64
 	highestLevel int64 // highest level for now
+	header       *float32NodeDesc
 }
 
 type float32NodeDesc struct {
@@ -593,7 +593,7 @@ func (n *float32NodeDesc) equal(key float32) bool {
 	return n.key == key
 }
 
-// NewFloat32Desc return an empty float32 skipmap.
+// NewFloat32Desc returns an emptyfloat32 skipmap.
 func NewFloat32Desc() *Float32MapDesc {
 	h := newFloat32NodeDesc(0, "", maxLevel)
 	h.flags.SetTrue(fullyLinked)
@@ -1040,16 +1040,16 @@ func (s *Float32MapDesc) Range(f func(key float32, value interface{}) bool) {
 	}
 }
 
-// Len return the length of this skipmap.
+// Len returns the length of this skipmap.
 func (s *Float32MapDesc) Len() int {
 	return int(atomic.LoadInt64(&s.length))
 }
 
 // Float64Map represents a map based on skip list in ascending order.
 type Float64Map struct {
-	header       *float64Node
 	length       int64
 	highestLevel int64 // highest level for now
+	header       *float64Node
 }
 
 type float64Node struct {
@@ -1105,7 +1105,7 @@ func (n *float64Node) equal(key float64) bool {
 	return n.key == key
 }
 
-// NewFloat64 return an empty float64 skipmap.
+// NewFloat64 returns an emptyfloat64 skipmap.
 func NewFloat64() *Float64Map {
 	h := newFloat64Node(0, "", maxLevel)
 	h.flags.SetTrue(fullyLinked)
@@ -1552,16 +1552,16 @@ func (s *Float64Map) Range(f func(key float64, value interface{}) bool) {
 	}
 }
 
-// Len return the length of this skipmap.
+// Len returns the length of this skipmap.
 func (s *Float64Map) Len() int {
 	return int(atomic.LoadInt64(&s.length))
 }
 
 // Float64MapDesc represents a map based on skip list in descending order.
 type Float64MapDesc struct {
-	header       *float64NodeDesc
 	length       int64
 	highestLevel int64 // highest level for now
+	header       *float64NodeDesc
 }
 
 type float64NodeDesc struct {
@@ -1617,7 +1617,7 @@ func (n *float64NodeDesc) equal(key float64) bool {
 	return n.key == key
 }
 
-// NewFloat64Desc return an empty float64 skipmap.
+// NewFloat64Desc returns an emptyfloat64 skipmap.
 func NewFloat64Desc() *Float64MapDesc {
 	h := newFloat64NodeDesc(0, "", maxLevel)
 	h.flags.SetTrue(fullyLinked)
@@ -2064,16 +2064,16 @@ func (s *Float64MapDesc) Range(f func(key float64, value interface{}) bool) {
 	}
 }
 
-// Len return the length of this skipmap.
+// Len returns the length of this skipmap.
 func (s *Float64MapDesc) Len() int {
 	return int(atomic.LoadInt64(&s.length))
 }
 
 // Int32Map represents a map based on skip list in ascending order.
 type Int32Map struct {
-	header       *int32Node
 	length       int64
 	highestLevel int64 // highest level for now
+	header       *int32Node
 }
 
 type int32Node struct {
@@ -2129,7 +2129,7 @@ func (n *int32Node) equal(key int32) bool {
 	return n.key == key
 }
 
-// NewInt32 return an empty int32 skipmap.
+// NewInt32 returns an emptyint32 skipmap.
 func NewInt32() *Int32Map {
 	h := newInt32Node(0, "", maxLevel)
 	h.flags.SetTrue(fullyLinked)
@@ -2576,16 +2576,16 @@ func (s *Int32Map) Range(f func(key int32, value interface{}) bool) {
 	}
 }
 
-// Len return the length of this skipmap.
+// Len returns the length of this skipmap.
 func (s *Int32Map) Len() int {
 	return int(atomic.LoadInt64(&s.length))
 }
 
 // Int32MapDesc represents a map based on skip list in descending order.
 type Int32MapDesc struct {
-	header       *int32NodeDesc
 	length       int64
 	highestLevel int64 // highest level for now
+	header       *int32NodeDesc
 }
 
 type int32NodeDesc struct {
@@ -2641,7 +2641,7 @@ func (n *int32NodeDesc) equal(key int32) bool {
 	return n.key == key
 }
 
-// NewInt32Desc return an empty int32 skipmap.
+// NewInt32Desc returns an emptyint32 skipmap.
 func NewInt32Desc() *Int32MapDesc {
 	h := newInt32NodeDesc(0, "", maxLevel)
 	h.flags.SetTrue(fullyLinked)
@@ -3088,16 +3088,16 @@ func (s *Int32MapDesc) Range(f func(key int32, value interface{}) bool) {
 	}
 }
 
-// Len return the length of this skipmap.
+// Len returns the length of this skipmap.
 func (s *Int32MapDesc) Len() int {
 	return int(atomic.LoadInt64(&s.length))
 }
 
 // Int16Map represents a map based on skip list in ascending order.
 type Int16Map struct {
-	header       *int16Node
 	length       int64
 	highestLevel int64 // highest level for now
+	header       *int16Node
 }
 
 type int16Node struct {
@@ -3153,7 +3153,7 @@ func (n *int16Node) equal(key int16) bool {
 	return n.key == key
 }
 
-// NewInt16 return an empty int16 skipmap.
+// NewInt16 returns an emptyint16 skipmap.
 func NewInt16() *Int16Map {
 	h := newInt16Node(0, "", maxLevel)
 	h.flags.SetTrue(fullyLinked)
@@ -3600,16 +3600,16 @@ func (s *Int16Map) Range(f func(key int16, value interface{}) bool) {
 	}
 }
 
-// Len return the length of this skipmap.
+// Len returns the length of this skipmap.
 func (s *Int16Map) Len() int {
 	return int(atomic.LoadInt64(&s.length))
 }
 
 // Int16MapDesc represents a map based on skip list in descending order.
 type Int16MapDesc struct {
-	header       *int16NodeDesc
 	length       int64
 	highestLevel int64 // highest level for now
+	header       *int16NodeDesc
 }
 
 type int16NodeDesc struct {
@@ -3665,7 +3665,7 @@ func (n *int16NodeDesc) equal(key int16) bool {
 	return n.key == key
 }
 
-// NewInt16Desc return an empty int16 skipmap.
+// NewInt16Desc returns an emptyint16 skipmap.
 func NewInt16Desc() *Int16MapDesc {
 	h := newInt16NodeDesc(0, "", maxLevel)
 	h.flags.SetTrue(fullyLinked)
@@ -4112,16 +4112,16 @@ func (s *Int16MapDesc) Range(f func(key int16, value interface{}) bool) {
 	}
 }
 
-// Len return the length of this skipmap.
+// Len returns the length of this skipmap.
 func (s *Int16MapDesc) Len() int {
 	return int(atomic.LoadInt64(&s.length))
 }
 
 // IntMap represents a map based on skip list in ascending order.
 type IntMap struct {
-	header       *intNode
 	length       int64
 	highestLevel int64 // highest level for now
+	header       *intNode
 }
 
 type intNode struct {
@@ -4177,7 +4177,7 @@ func (n *intNode) equal(key int) bool {
 	return n.key == key
 }
 
-// NewInt return an empty int skipmap.
+// NewInt returns an emptyint skipmap.
 func NewInt() *IntMap {
 	h := newIntNode(0, "", maxLevel)
 	h.flags.SetTrue(fullyLinked)
@@ -4624,16 +4624,16 @@ func (s *IntMap) Range(f func(key int, value interface{}) bool) {
 	}
 }
 
-// Len return the length of this skipmap.
+// Len returns the length of this skipmap.
 func (s *IntMap) Len() int {
 	return int(atomic.LoadInt64(&s.length))
 }
 
 // IntMapDesc represents a map based on skip list in descending order.
 type IntMapDesc struct {
-	header       *intNodeDesc
 	length       int64
 	highestLevel int64 // highest level for now
+	header       *intNodeDesc
 }
 
 type intNodeDesc struct {
@@ -4689,7 +4689,7 @@ func (n *intNodeDesc) equal(key int) bool {
 	return n.key == key
 }
 
-// NewIntDesc return an empty int skipmap.
+// NewIntDesc returns an emptyint skipmap.
 func NewIntDesc() *IntMapDesc {
 	h := newIntNodeDesc(0, "", maxLevel)
 	h.flags.SetTrue(fullyLinked)
@@ -5136,16 +5136,16 @@ func (s *IntMapDesc) Range(f func(key int, value interface{}) bool) {
 	}
 }
 
-// Len return the length of this skipmap.
+// Len returns the length of this skipmap.
 func (s *IntMapDesc) Len() int {
 	return int(atomic.LoadInt64(&s.length))
 }
 
 // Uint64Map represents a map based on skip list in ascending order.
 type Uint64Map struct {
-	header       *uint64Node
 	length       int64
 	highestLevel int64 // highest level for now
+	header       *uint64Node
 }
 
 type uint64Node struct {
@@ -5201,7 +5201,7 @@ func (n *uint64Node) equal(key uint64) bool {
 	return n.key == key
 }
 
-// NewUint64 return an empty uint64 skipmap.
+// NewUint64 returns an emptyuint64 skipmap.
 func NewUint64() *Uint64Map {
 	h := newUuint64Node(0, "", maxLevel)
 	h.flags.SetTrue(fullyLinked)
@@ -5648,16 +5648,16 @@ func (s *Uint64Map) Range(f func(key uint64, value interface{}) bool) {
 	}
 }
 
-// Len return the length of this skipmap.
+// Len returns the length of this skipmap.
 func (s *Uint64Map) Len() int {
 	return int(atomic.LoadInt64(&s.length))
 }
 
 // Uint64MapDesc represents a map based on skip list in descending order.
 type Uint64MapDesc struct {
-	header       *uint64NodeDesc
 	length       int64
 	highestLevel int64 // highest level for now
+	header       *uint64NodeDesc
 }
 
 type uint64NodeDesc struct {
@@ -5713,7 +5713,7 @@ func (n *uint64NodeDesc) equal(key uint64) bool {
 	return n.key == key
 }
 
-// NewUint64Desc return an empty uint64 skipmap.
+// NewUint64Desc returns an emptyuint64 skipmap.
 func NewUint64Desc() *Uint64MapDesc {
 	h := newUuint64NodeDescDesc(0, "", maxLevel)
 	h.flags.SetTrue(fullyLinked)
@@ -6160,16 +6160,16 @@ func (s *Uint64MapDesc) Range(f func(key uint64, value interface{}) bool) {
 	}
 }
 
-// Len return the length of this skipmap.
+// Len returns the length of this skipmap.
 func (s *Uint64MapDesc) Len() int {
 	return int(atomic.LoadInt64(&s.length))
 }
 
 // Uint32Map represents a map based on skip list in ascending order.
 type Uint32Map struct {
-	header       *uint32Node
 	length       int64
 	highestLevel int64 // highest level for now
+	header       *uint32Node
 }
 
 type uint32Node struct {
@@ -6225,7 +6225,7 @@ func (n *uint32Node) equal(key uint32) bool {
 	return n.key == key
 }
 
-// NewUint32 return an empty uint32 skipmap.
+// NewUint32 returns an emptyuint32 skipmap.
 func NewUint32() *Uint32Map {
 	h := newUint32Node(0, "", maxLevel)
 	h.flags.SetTrue(fullyLinked)
@@ -6672,16 +6672,16 @@ func (s *Uint32Map) Range(f func(key uint32, value interface{}) bool) {
 	}
 }
 
-// Len return the length of this skipmap.
+// Len returns the length of this skipmap.
 func (s *Uint32Map) Len() int {
 	return int(atomic.LoadInt64(&s.length))
 }
 
 // Uint32MapDesc represents a map based on skip list in descending order.
 type Uint32MapDesc struct {
-	header       *uint32NodeDesc
 	length       int64
 	highestLevel int64 // highest level for now
+	header       *uint32NodeDesc
 }
 
 type uint32NodeDesc struct {
@@ -6737,7 +6737,7 @@ func (n *uint32NodeDesc) equal(key uint32) bool {
 	return n.key == key
 }
 
-// NewUint32Desc return an empty uint32 skipmap.
+// NewUint32Desc returns an emptyuint32 skipmap.
 func NewUint32Desc() *Uint32MapDesc {
 	h := newUint32NodeDesc(0, "", maxLevel)
 	h.flags.SetTrue(fullyLinked)
@@ -7184,16 +7184,16 @@ func (s *Uint32MapDesc) Range(f func(key uint32, value interface{}) bool) {
 	}
 }
 
-// Len return the length of this skipmap.
+// Len returns the length of this skipmap.
 func (s *Uint32MapDesc) Len() int {
 	return int(atomic.LoadInt64(&s.length))
 }
 
 // Uint16Map represents a map based on skip list in ascending order.
 type Uint16Map struct {
-	header       *uint16Node
 	length       int64
 	highestLevel int64 // highest level for now
+	header       *uint16Node
 }
 
 type uint16Node struct {
@@ -7249,7 +7249,7 @@ func (n *uint16Node) equal(key uint16) bool {
 	return n.key == key
 }
 
-// NewUint16 return an empty uint16 skipmap.
+// NewUint16 returns an emptyuint16 skipmap.
 func NewUint16() *Uint16Map {
 	h := newUint16Node(0, "", maxLevel)
 	h.flags.SetTrue(fullyLinked)
@@ -7696,16 +7696,16 @@ func (s *Uint16Map) Range(f func(key uint16, value interface{}) bool) {
 	}
 }
 
-// Len return the length of this skipmap.
+// Len returns the length of this skipmap.
 func (s *Uint16Map) Len() int {
 	return int(atomic.LoadInt64(&s.length))
 }
 
 // Uint16MapDesc represents a map based on skip list in descending order.
 type Uint16MapDesc struct {
-	header       *uint16NodeDesc
 	length       int64
 	highestLevel int64 // highest level for now
+	header       *uint16NodeDesc
 }
 
 type uint16NodeDesc struct {
@@ -7761,7 +7761,7 @@ func (n *uint16NodeDesc) equal(key uint16) bool {
 	return n.key == key
 }
 
-// NewUint16Desc return an empty uint16 skipmap.
+// NewUint16Desc returns an emptyuint16 skipmap.
 func NewUint16Desc() *Uint16MapDesc {
 	h := newUint16NodeDesc(0, "", maxLevel)
 	h.flags.SetTrue(fullyLinked)
@@ -8208,16 +8208,16 @@ func (s *Uint16MapDesc) Range(f func(key uint16, value interface{}) bool) {
 	}
 }
 
-// Len return the length of this skipmap.
+// Len returns the length of this skipmap.
 func (s *Uint16MapDesc) Len() int {
 	return int(atomic.LoadInt64(&s.length))
 }
 
 // UintMap represents a map based on skip list in ascending order.
 type UintMap struct {
-	header       *uintNode
 	length       int64
 	highestLevel int64 // highest level for now
+	header       *uintNode
 }
 
 type uintNode struct {
@@ -8273,7 +8273,7 @@ func (n *uintNode) equal(key uint) bool {
 	return n.key == key
 }
 
-// NewUint return an empty uint skipmap.
+// NewUint returns an emptyuint skipmap.
 func NewUint() *UintMap {
 	h := newUintNode(0, "", maxLevel)
 	h.flags.SetTrue(fullyLinked)
@@ -8720,16 +8720,16 @@ func (s *UintMap) Range(f func(key uint, value interface{}) bool) {
 	}
 }
 
-// Len return the length of this skipmap.
+// Len returns the length of this skipmap.
 func (s *UintMap) Len() int {
 	return int(atomic.LoadInt64(&s.length))
 }
 
 // UintMapDesc represents a map based on skip list in descending order.
 type UintMapDesc struct {
-	header       *uintNodeDesc
 	length       int64
 	highestLevel int64 // highest level for now
+	header       *uintNodeDesc
 }
 
 type uintNodeDesc struct {
@@ -8785,7 +8785,7 @@ func (n *uintNodeDesc) equal(key uint) bool {
 	return n.key == key
 }
 
-// NewUintDesc return an empty uint skipmap.
+// NewUintDesc returns an emptyuint skipmap.
 func NewUintDesc() *UintMapDesc {
 	h := newUintNodeDesc(0, "", maxLevel)
 	h.flags.SetTrue(fullyLinked)
@@ -9232,16 +9232,16 @@ func (s *UintMapDesc) Range(f func(key uint, value interface{}) bool) {
 	}
 }
 
-// Len return the length of this skipmap.
+// Len returns the length of this skipmap.
 func (s *UintMapDesc) Len() int {
 	return int(atomic.LoadInt64(&s.length))
 }
 
 // StringMap represents a map based on skip list.
 type StringMap struct {
-	header       *stringNode
 	length       int64
 	highestLevel int64 // highest level for now
+	header       *stringNode
 }
 
 type stringNode struct {
@@ -9291,7 +9291,7 @@ func (n *stringNode) atomicStoreNext(i int, node *stringNode) {
 	n.next.atomicStore(i, unsafe.Pointer(node))
 }
 
-// NewString return an empty int64 skipmap.
+// NewString returns an emptyint64 skipmap.
 func NewString() *StringMap {
 	h := newStringNode("", "", maxLevel)
 	h.flags.SetTrue(fullyLinked)
@@ -9741,7 +9741,7 @@ func (s *StringMap) Range(f func(key string, value interface{}) bool) {
 	}
 }
 
-// Len return the length of this skipmap.
+// Len returns the length of this skipmap.
 func (s *StringMap) Len() int {
 	return int(atomic.LoadInt64(&s.length))
 }

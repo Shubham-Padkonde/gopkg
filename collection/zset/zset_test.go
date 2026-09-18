@@ -18,11 +18,13 @@ import (
 	"fmt"
 	"math/rand"
 	"sort"
+	"strconv"
+	"sync"
 	"testing"
 	"time"
 
+	"github.com/bytedance/gopkg/internal/assert"
 	"github.com/bytedance/gopkg/lang/fastrand"
-	"github.com/stretchr/testify/assert"
 )
 
 var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
@@ -37,7 +39,7 @@ func randString(prefix string) string {
 
 func TestFloat64Set(t *testing.T) {
 	z := NewFloat64()
-	assert.Zero(t, z.Len())
+	assert.True(t, z.Len() == 0)
 }
 
 func TestFloat64SetAdd(t *testing.T) {
@@ -154,7 +156,7 @@ func TestFloat64SetRank_UpdateScore(t *testing.T) {
 	for _, v := range vs {
 		r := z.Rank(v)
 		assert.NotEqual(t, -1, r)
-		assert.Greater(t, z.Len(), r)
+		assert.True(t, z.Len() > r)
 
 		// verify rank by traversing level 0
 		actualRank := 0
@@ -171,13 +173,13 @@ func TestFloat64SetRank_UpdateScore(t *testing.T) {
 	}
 }
 
-// Test whether the ramdom inserted values sorted
+// Test whether the random inserted values sorted
 func TestFloat64SetIsSorted(t *testing.T) {
 	const N = 1000
 	z := NewFloat64()
 	rand.Seed(time.Now().Unix())
 
-	// Test whether the ramdom inserted values sorted
+	// Test whether the random inserted values sorted
 	for i := 0; i < N; i++ {
 		z.Add(fastrand.Float64(), fmt.Sprint(i))
 	}
@@ -235,11 +237,16 @@ func testInternalSpan(t *testing.T, z *Float64Set) {
 				assert.NotEqual(t, -1, toRank)
 
 				// span = to.rank - from.rank
-				assert.Equalf(t, span, toRank-fromRank, "from %q (score: , rank: %d) to %q (score: %d, rank: %d), expect span: %d, actual: %d",
-					from, fromScore, fromRank, to, toScore, toRank, span, toRank-fromRank)
+				if span != toRank-fromRank {
+					t.Fatalf("from %q (score: %v, rank: %d) to %q (score: %v, rank: %d), expect span: %d, actual: %d",
+						from, fromScore, fromRank, to, toScore, toRank, span, toRank-fromRank)
+				}
 			} else { // from -> nil
 				// span = skiplist.len - from.rank
-				assert.Equalf(t, l.length-fromRank, x.loadSpan(i), "%q (score: , rank: %d)", from, fromScore, fromRank)
+				if l.length-fromRank != x.loadSpan(i) {
+					t.Fatalf("%q (score: %v, rank: %d): expect span %d, actual %d",
+						from, fromScore, fromRank, l.length-fromRank, x.loadSpan(i))
+				}
 			}
 		}
 	}
@@ -406,8 +413,8 @@ func testFloat64SetRangeByScore(t *testing.T, rev bool) {
 	}
 	var prev *float64
 	for _, n := range ns {
-		assert.LessOrEqual(t, min, n.Score)
-		assert.GreaterOrEqual(t, max, n.Score)
+		assert.True(t, min <= n.Score)
+		assert.True(t, max >= n.Score)
 		if prev != nil {
 			if rev {
 				assert.True(t, *prev >= n.Score)
@@ -493,6 +500,26 @@ func TestFloat64SetRemoveRangeByRank(t *testing.T) {
 	assert.Equal(t, N, z.Len()+len(actualNs))
 }
 
+func TestFloat64SetRemoveRangeByRankConcurrently(t *testing.T) {
+	const N = 10000
+	z := NewFloat64()
+	for i := 0; i < N; i++ {
+		z.Add(float64(i), strconv.Itoa(i))
+	}
+	const G = 10
+	wg := sync.WaitGroup{}
+	for i := 0; i < G; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			start := fastrand.Intn(N / 2)
+			stop := N/2 + start
+			z.RemoveRangeByRank(start, stop)
+		}()
+	}
+	wg.Wait()
+}
+
 func TestFloat64SetRemoveRangeByScore(t *testing.T) {
 	const N = 1000
 	z := NewFloat64()
@@ -576,7 +603,7 @@ func TestUnionFloat64(t *testing.T) {
 
 func TestUnionFloat64_Empty(t *testing.T) {
 	z := UnionFloat64()
-	assert.Zero(t, z.Len())
+	assert.True(t, z.Len() == 0)
 }
 
 func TestInterFloat64(t *testing.T) {
@@ -604,7 +631,7 @@ func TestInterFloat64(t *testing.T) {
 
 func TestInterFloat64_Empty(t *testing.T) {
 	z := InterFloat64()
-	assert.Zero(t, z.Len())
+	assert.True(t, z.Len() == 0)
 }
 
 func TestInterFloat64_Simple(t *testing.T) {
@@ -616,5 +643,43 @@ func TestInterFloat64_Simple(t *testing.T) {
 	z3.Add(0, "2")
 
 	z := InterFloat64(z1, z2, z3)
-	assert.Zero(t, z.Len())
+	assert.True(t, z.Len() == 0)
+}
+
+func BenchmarkRankAfterDelete(b *testing.B) {
+	for _, size := range []int{1000, 10000} {
+		b.Run(strconv.Itoa(size), func(b *testing.B) {
+			z := NewFloat64()
+			for i := 0; i < size; i++ {
+				z.Add(float64(i), strconv.Itoa(i))
+			}
+			for i := 0; i < size/2; i++ {
+				z.Remove(strconv.Itoa(i * 2))
+			}
+			target := strconv.Itoa(size - 1)
+			b.ResetTimer()
+			for i := 0; i < b.N; i++ {
+				z.Rank(target)
+			}
+		})
+	}
+}
+
+func BenchmarkGetNodeByRankAfterDelete(b *testing.B) {
+	for _, size := range []int{1000, 10000} {
+		b.Run(strconv.Itoa(size), func(b *testing.B) {
+			z := NewFloat64()
+			for i := 0; i < size; i++ {
+				z.Add(float64(i), strconv.Itoa(i))
+			}
+			for i := 0; i < size/2; i++ {
+				z.Remove(strconv.Itoa(i * 2))
+			}
+			rank := z.Len()
+			b.ResetTimer()
+			for i := 0; i < b.N; i++ {
+				z.list.GetNodeByRank(rank)
+			}
+		})
+	}
 }

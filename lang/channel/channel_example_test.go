@@ -20,7 +20,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stretchr/testify/assert"
+	"github.com/bytedance/gopkg/internal/assert"
 )
 
 type request struct {
@@ -105,7 +105,7 @@ func TestCPUHeavy(t *testing.T) {
 				curConcurrency := atomic.AddInt32(&concurrency, 1)
 				defer atomic.AddInt32(&concurrency, -1)
 				if curConcurrency > 10 {
-					// concurrency too high, reuqest faild
+					// concurrency too high, request fails
 					return
 				}
 

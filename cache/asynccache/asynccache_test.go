@@ -20,7 +20,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stretchr/testify/assert"
+	"github.com/bytedance/gopkg/internal/assert"
 )
 
 func TestGetOK(t *testing.T) {
@@ -37,18 +37,18 @@ func TestGetOK(t *testing.T) {
 	c := NewAsyncCache(op)
 
 	v, err := c.Get(key)
-	assert.NoError(t, err)
+	assert.Nil(t, err)
 	assert.Equal(t, v.(string), ret)
 
 	time.Sleep(time.Second / 2)
 	ret = "change"
 	v, err = c.Get(key)
-	assert.NoError(t, err)
+	assert.Nil(t, err)
 	assert.NotEqual(t, v.(string), ret)
 
 	time.Sleep(time.Second)
 	v, err = c.Get(key)
-	assert.NoError(t, err)
+	assert.Nil(t, err)
 	assert.Equal(t, v.(string), ret)
 }
 
@@ -71,7 +71,7 @@ func TestGetErr(t *testing.T) {
 	c := NewAsyncCache(op)
 
 	v, err := c.Get(key)
-	assert.Error(t, err)
+	assert.True(t, err != nil)
 	assert.Nil(t, v)
 
 	time.Sleep(time.Second / 2)
@@ -80,7 +80,7 @@ func TestGetErr(t *testing.T) {
 
 	time.Sleep(time.Second + 10*time.Millisecond)
 	v, err = c.Get(key)
-	assert.NoError(t, err)
+	assert.Nil(t, err)
 	assert.Equal(t, v.(string), ret)
 }
 
